@@ -85,7 +85,6 @@ To run the News Authenticity Checker locally, follow these steps:
 - **[LeetCode](https://leetcode.com/u/swapnilrai80/)**
 - **[GitHub](https://github.com/imswapnilrai)**
 - **[LinkedIn](https://www.linkedin.com/in/swapnil-rai-1bb124217/)**
-- **[Download Resume](static/Swapnil%20Rai%20Resume-%20DA.pdf)**
 
 ## License
 
