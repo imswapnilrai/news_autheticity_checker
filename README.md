@@ -15,7 +15,7 @@ The News Authenticity Checker is a web application designed to assess the authen
 
 Below is a screenshot of the News Authenticity Checker web application:
 
-![Screenshot](static/screenshot.png)
+![Screenshot](assets/screenshot.png)
 
 ## How It Works
 
