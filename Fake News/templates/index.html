@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Authenticity Checker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='360_F_463047503_tivZrN6qgtjDOfpM7jXMI59tO6EzXmgS.jpg') }}");
+            background-size: cover;  
+            background-position: center;
+            background-attachment: fixed;  
+            background-repeat: no-repeat;
+            background-color: #12212;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            z-index: 1000;
+        }
+
+        .navbar-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-links li {
+            margin-right: 20px;
+        }
+
+        .navbar-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 5px 10px;
+        }
+
+        .navbar-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        .container {
+            margin-top: 60px; /* Adjust for navbar height */
+        }
+
+        .about, .connect {
+            margin: 20px;
+        }
+
+        .result {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .result h2 {
+            margin: 0;
+        }
+
+        .connect {
+            text-align: center; /* Center content horizontally */
+        }
+
+        .connect ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex; /* Align items in a single line */
+            justify-content: center; /* Center items horizontally */
+        }
+
+        .connect li {
+            margin-right: 10px; /* Space between links */
+        }
+
+        .connect a {
+            color: #ffffff;
+            text-decoration: underline; /* Underline links */
+            font-size: 12px; /* Small text size */
+            padding: 5px; /* Space around text */
+        }
+
+        .connect a:hover {
+            text-decoration: underline;
+            color: #ffffff; /* Keep color white on hover */
+        }
+
+        .about h3 {
+            text-decoration: underline; /* Underline headings */
+            margin-bottom: 10px; /* Space below heading */
+        }
+
+        .about p, .about ol, .about ul {
+            line-height: 1.6; /* Increase line spacing */
+            margin-bottom: 15px; /* Space below paragraphs and lists */
+        }
+
+        .about ol, .about ul {
+            margin-left: 20px; /* Indent lists */
+        }
+    </style>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul class="navbar-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#connect">Connect</a></li>
+        </ul>
+        <div class="navbar-title">News Authenticity Checker</div>
+    </nav>
+
+    <div class="container" id="home">
+        <h1>News Authenticity Checker</h1>
+        <p>Enter the news content below to check its authenticity:</p>
+
+        <form action="{{ url_for('predict') }}" method="POST">
+            <textarea name="news_content" rows="10" placeholder="Paste the news content here..."></textarea>
+            <button type="submit">Check Authenticity</button>
+        </form>
+
+        {% if predicted_news %}
+        <div class="result">
+            <h2>Result: {{ predicted_news }}</h2>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="about" id="about">
+        <h2>About This Project</h2>
+        <p>
+            This project is designed to predict the authenticity of news articles using Natural Language Processing (NLP) techniques and a Logistic Regression model. The primary goal is to distinguish between 'Real News' and 'Super Fake' news content based on textual analysis.
+        </p>
+
+        <h3>How This Project Was Built</h3>
+        <ol>
+            <li><strong>Data Collection:</strong> The project started with collecting a dataset of news articles labeled as either real or fake.</li>
+            <li><strong>Preprocessing:</strong> The text was cleaned and normalized using techniques like stemming and removing stopwords.</li>
+            <li><strong>Feature Extraction:</strong> The text data was converted into numerical features using the Tf-IDF Vectorizer.</li>
+            <li><strong>Model Training:</strong> A Logistic Regression model was trained using the vectorized features to classify news content.</li>
+            <li><strong>Deployment:</strong> The model was deployed in a Flask web application where users can input news content and receive predictions.</li>
+        </ol>
+
+        <h3>Skills Used</h3>
+        <ul>
+            <li>Python</li>
+            <li>Flask</li>
+            <li>Natural Language Processing (NLP)</li>
+            <li>Logistic Regression</li>
+            <li>Tf-IDF Vectorization</li>
+            <li>HTML/CSS</li>
+        </ul>
+
+        <h3>Logistic Regression Model</h3>
+        <p>
+            Logistic Regression is a statistical model that uses a logistic function to model a binary dependent variable. In this project, it helps predict whether the news is real or fake. The model calculates the probability that a given news article belongs to one of the two categories (real or fake).
+        </p>
+        <p>
+            Mathematically, Logistic Regression estimates the probability of a binary outcome using the formula:
+            <br>
+            <em>P(Y=1|X) = 1 / (1 + exp(- (β0 + β1X1 + β2X2 + ... + βnXn)))</em>
+            <br>
+            Where:
+            <ul>
+                <li>P(Y=1|X) is the probability of the news being real.</li>
+                <li>X1, X2, ..., Xn are the features (in this case, the words in the news content).</li>
+                <li>β0, β1, ..., βn are the model parameters (weights).</li>
+            </ul>
+        </p>
+
+        <h3>Tf-IDF Vectorizer</h3>
+        <p>
+            The Tf-IDF (Term Frequency-Inverse Document Frequency) Vectorizer converts the textual content into a matrix of numerical values. It reflects the importance of a word in a document relative to a collection of documents. Words frequently occurring in one document but rare in others get higher scores, which helps in distinguishing between different categories of news.
+        </p>
+
+        <h3>NLTK and NLP</h3>
+        <p>
+            NLTK (Natural Language Toolkit) is a suite of libraries and programs for symbolic and statistical Natural Language Processing. In this project, NLTK was used for text preprocessing, including:
+            <ul>
+                <li><strong>Stopwords Removal:</strong> Eliminating common words like 'the', 'is', etc., which do not contribute significantly to the model.</li>
+                <li><strong>Stemming:</strong> Reducing words to their root form, e.g., 'running' to 'run'. This helps in treating related words as a single feature.</li>
+            </ul>
+            NLP is a field of AI that focuses on the interaction between computers and humans through natural language. It is used here to process and analyze large amounts of textual data to make predictions.
+        </p>
+    </div>
+
+    <div class="connect" id="connect">
+        <h2>Connect with Me</h2>
+        <ul>
+            <li><a href="https://leetcode.com/u/swapnilrai80/" target="_blank">LeetCode</a></li>
+            <li><a href="https://github.com/imswapnilrai" target="_blank">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/swapnil-rai-1bb124217/" target="_blank">LinkedIn</a></li>
+            <li><a href="{{ url_for('static', filename='Swapnil Rai Resume- DA.pdf') }}" target="_blank">Download Resume</a></li>
+        </ul>
+    </div>
+</body>
+</html>
